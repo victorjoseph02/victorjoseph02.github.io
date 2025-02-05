@@ -4,6 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <script>
+        function showData(){
+            alert("Hello World")
+
+        }
+    </script>
 </head>
 <body>
     <h1>New User Registration Form</h1>
@@ -11,6 +17,8 @@
     <p><input type="text" id="email" placeholder="Enter Email Address"></p>
     <p><input type="password" id="password" placeholder="Enter Password"></p>
     <p><input type="datetime-local" id="dob"></p>
-    <button>Register</button>
+    <button onclick="showData()">Register</button>
+    <hr/>
+    <div id="data"></div>
 </body>
 </html>
