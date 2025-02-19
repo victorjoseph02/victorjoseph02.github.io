@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="index.js"></script>
+  </head>
+  <body onload="showProducts()">
+    <h1>My Store</h1>
+    <h4 onclick="displayCart()">Cart:<span id='items'></h4>
+    <hr />
+    <div id="prodBox" style="display:block">
+      <h3>Products</h3>
+    </div>
+    <div id="divProducts"></div>
+    <div id="cartBox" style="display: none">
+      <h3>My Cart</h3>
+      <div id="divCart"></div>
+    </div>
+    <h4>Order value:<span id='order'></span></h4>
+    <button onclick="hideCart()">Close</button>
+  </body>
+</html>
