@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      body {
+        background-color: #eeeeee;
+      }
+      .container {
+        background-color: white;
+        border-radius: 20px;
+        padding: 10px;
+        width: 400px;
+        margin: auto;
+      }
+      .row {
+        display: flex;
+        justify-content: center;
+      }
+      .title {
+        font-size: 30px;
+        margin-top: 30px;
+      }
+      .header {
+        font-size: 50px;
+        color: blue;
+        font-weight: bold;
+        font-family: verdana;
+      }
+      .caption {
+        font-size: 20px;
+        color: gray;
+        text-align: center;
+        margin-bottom: 5px;
+      }
+      input,
+      select {
+        width: 100%;
+        margin: 5px;
+        border-radius: 5px;
+        padding: 5px;
+        border: 1px solid gray;
+      }
+      button {
+        color: white;
+        background-color: green;
+        font-size: 20px;
+        padding: 5px;
+        border-radius: 2px;
+        width: 200px;
+        border: none;
+        margin: 5px;
+      }
+      .leftCaption {
+        color: gray;
+        margin-left: 5px;
+        font-size: 10px;
+      }
+      .qMark {
+        background-color: green;
+        border-radius: 5px;
+        color: white;
+        padding-left: 5px;
+        padding-right: 5px;
+        margin: 2px;
+      }
+      .radioClass {
+        border: 1px solid gray;
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+        margin: 5px;
+        border-radius: 5px;
+        padding: 3px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="row">
+        <div class="header">facebook</div>
+      </div>
+      <div class="row">
+        <div>
+          <div class="title">Create a new account</div>
+          <div class="caption">It's quick and easy.</div>
+        </div>
+      </div>
+      <hr>
+    <div id="root"></div>
+    </div>
+    <script>
+      const showData = () => {
+        let firstname = document.getElementById("firstname").value;
+        let surname = document.getElementById("surname").value;
+        let str = `
+        <div>
+          Name:${firstname} ${surname}
+        </div>
+        `;
+        root.innerHTML = str;
+      };
+
+      const showForm = () => {
+        let str = `
+      
+      <div class="row">
+        <input type="text" id="firstname" placeholder="Firstname" />
+        <input type="text" id="surname" placeholder="Surname" />
+      </div>
+      <div class="row" style="justify-content: start">
+        <div class="leftCaption">
+          Date of Birth<span class="qMark"
+            ><abbr title="Click for more information">?</abbr></span
+          >
+        </div>
+      </div>
+      <div class="row">
+        <select id="day"></select>
+        <select id="month"></select>
+        <select id="year"></select>
+      </div>
+      <div class="row" style="justify-content: start">
+        <div class="leftCaption">
+          Gender<span class="qMark"
+            ><abbr title="Click for more information">?</abbr></span
+          >
+        </div>
+      </div>
+      <div class="row">
+        <div class="radioClass">
+          <div><label> Female</label></div>
+          <div><input type="radio" name="gender" onclick="togglePronoun()" /></div>
+        </div>
+        <div class="radioClass">
+          <div><label> Male</label></div>
+          <div><input type="radio" name="gender" onclick="togglePronoun()" /></div>
+        </div>
+        <div class="radioClass">
+          <div><label> Custom</label></div>
+          <div><input type="radio" name="gender" onclick="togglePronoun()" /></div>
+        </div>
+      </div>
+
+     <div class="row">
+      <select id="prSelect" style="display:none">
+        <option>Select your pronoun</option>
+        <option>She:"Wish her a happy birthday"</option>
+        <option>He:"Wish him a happy birthday"</option>
+        <option>They:"Wish them a happy birthday"</option>
+      </select>
+     </div>
+
+      <div class="row">
+        <input type="text" placeholder="Mobule number or email address" />
+      </div>
+      <div class="row">
+        <input type="password" placeholder="New password" />
+      </div>
+      <div class="row">
+        <button onclick='showData()'>Sign Up</button>
+      </div>
+      `;
+        root.innerHTML = str;
+      };
+
+      showForm();
+      let str = "";
+      for (let i = 1; i <= 31; i++) {
+        str += `<option>${i}</option>`;
+      }
+      day.innerHTML = str;
+      str = "";
+      for (let i = 1; i <= 12; i++) {
+        str += `<option>${i}</option>`;
+      }
+      month.innerHTML = str;
+      str = "";
+      for (let i = 1905; i <= 2025; i++) {
+        str += `<option>${i}</option>`;
+      }
+      year.innerHTML = str;
+
+      const togglePronoun = () => {
+        let p = document.getElementsByName("gender");
+        if (p[2].checked) {
+          prSelect.style.display = "block";
+        } else {
+          prSelect.style.display = "none";
+        }
+      };
+    </script>
+  </body>
+</html>
