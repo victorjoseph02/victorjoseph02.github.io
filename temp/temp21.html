@@ -47,12 +47,11 @@
         color: white;
         background-color: green;
         font-size: 20px;
-        padding: 5px;
+        padding: 5px; 
         border-radius: 2px;
-        margin: 5px;
-        width: 200px;
+        width: 150px;
         border: none;
-
+        margin: 5px;
       }
       .leftCaption {
         color: gray;
@@ -77,7 +76,6 @@
         padding: 3px;
       }
     </style>
-
   </head>
   <body>
     <div class="container">
@@ -90,9 +88,59 @@
           <div class="caption">It's quick and easy.</div>
         </div>
       </div>
+      <hr />
+      <div id="root"></div>
+    </div>
+    <script>
+      const months = [
+        "Jan",
+        "Feb",
+        "Mar",
+        "Apr",
+        "May",
+        "Jun",
+        "Jul",
+        "Aug",
+        "Sep",
+        "Oct",
+        "Nov",
+        "Dec",
+      ];
+      const showData = () => {
+        let firstname = document.getElementById("firstname").value;
+        let surname = document.getElementById("surname").value;
+        let email = document.getElementById("email").value;
+        let password = document.getElementById("password").value;
+        let gender = document.getElementsByName("gender");
+        let pronoun = document.getElementById("prSelect").value;
+        let day = document.getElementById("day").value;
+        let month = document.getElementById("month").value;
+        let year = document.getElementById("year").value;
+        let dob = `${day}-${month}-${year}`;
+        let g = "";
+        if (gender[0].checked) g = "Female";
+        if (gender[1].checked) g = "Male";
+        if (gender[2].checked) g = pronoun;
+        let str = `
+          <h3>Verify your information</h3>
+          <p>Name:${firstname} ${surname}</p>
+          <p>Email:${email}</p>
+          <p>Password:${password}</p>
+          <p>Gender:${g}</p>
+          <p>Date of Birth:${dob}</p>
+          <button>Confirm</button>
+          <button>Edit</button>
+        </div>
+        `;
+        root.innerHTML = str;
+      };
+
+      const showForm = () => {
+        let str = `
+      
       <div class="row">
-        <input type="text" placeholder="Firstname" />
-        <input type="text" placeholder="Surname" />
+        <input type="text" id="firstname" placeholder="Firstname" />
+        <input type="text" id="surname" placeholder="Surname" />
       </div>
       <div class="row" style="justify-content: start">
         <div class="leftCaption">
@@ -119,61 +167,66 @@
           <div><input type="radio" name="gender" onclick="togglePronoun()" /></div>
         </div>
         <div class="radioClass">
-            <div><label> Male</label></div>
-                <div><input type="radio" name="gender" onclick="togglePronoun()" /></div>
-            </div>
+          <div><label> Male</label></div>
+          <div><input type="radio" name="gender" onclick="togglePronoun()" /></div>
+        </div>
         <div class="radioClass">
-            <div><label> Custom</label></div>
-            <div><input type="radio" name="gender" onclick="togglePronoun()"/></div>
+          <div><label> Custom</label></div>
+          <div><input type="radio" name="gender" onclick="togglePronoun()" /></div>
         </div>
       </div>
 
-      <div class="row"> 
-        <select id="prSelect" style="display: none;">
-            <option>Select your pronoun</option>
-            <option>She:"Wish her a happy birthday</option>
-            <option>He:"Wish him a happy birthday</option>
-            <option>They:"Wish them a happy birthday</option>
-        </select>
+     <div class="row">
+      <select id="prSelect" style="display:none">
+        <option value="NA">Select your pronoun</option>
+        <option value="She">She:"Wish her a happy birthday"</option>
+        <option value="He">He:"Wish him a happy birthday"</option>
+        <option value="They">They:"Wish them a happy birthday"</option>
+      </select>
+     </div>
+
+      <div class="row">
+        <input type="text" id="email" placeholder="Mobule number or email address" />
       </div>
       <div class="row">
-        <input type="text" placeholder="Mobile number or email address"/>
-      </div><div class="row">
-        <input type="text" placeholder="New password"/>
+        <input type="password" id="password" placeholder="New password" />
       </div>
       <div class="row">
-        <div> <button>Sign up</button> </div>
+        <button onclick='showData()'>Sign Up</button>
       </div>
-    </div>
+      `;
+        root.innerHTML = str;
+      };
 
-    <script>
-        let str="";
-        for(let i=1;i<=31;i++){
-            str += `<option>${i}</option>`;
-        }
-        day.innerHTML = str; 
+      showForm();
+      let str = "";
+      let dt = new Date()
+      let d = dt.getDate()
+      let m = dt.getMonth()
+      let y = dt.getFullYear()
+      for (let i = 1; i <= 31; i++) {
+        str += `<option ${i === d && "selected"}>${i}</option>`;
+      }
+      day.innerHTML = str;
+      str = "";
+      for (let i = 0; i <= 11; i++) {
+        str += `<option ${i === m && "selected"}>${months[i]}</option>`;
+      }
+      month.innerHTML = str;
+      str = "";
+      for (let i = 1905; i <= 2025; i++) {
+        str += `<option ${i === y && "selected"}>${i}</option>`;
+      }
+      year.innerHTML = str;
 
-        let str1="";
-        for(let i=1;i<=12;i++){
-            str1 += `<option>${i}</option>`;
+      const togglePronoun = () => {
+        let p = document.getElementsByName("gender");
+        if (p[2].checked) {
+          prSelect.style.display = "block";
+        } else {
+          prSelect.style.display = "none";
         }
-        month.innerHTML = str1; 
-        let str2="";
-        for(let i=1905;i<=2025;i++){
-            str2 += `<option>${i}<const togglePronoun = () =>{
-            let p = document.getElementsByName("gender")
-            if(p[2].checked){
-                prSelect.style.display= 'block'
-            }
-            else{
-                prSelect.style.display = 'none'
-            } 
-        }/option>`;
-        }
-        year.innerHTML = str2;
-
-        
+      };
     </script>
-
   </body>
-</html>
+</html> 
