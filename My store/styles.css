@@ -3,6 +3,12 @@
     justify-content: space-between;
     padding: 10px;
 }
+.menu {
+    display:flex;
+}
+.menu div {
+    padding: 10px;
+}
 .row {
     display:flex;
     justify-content: center;
