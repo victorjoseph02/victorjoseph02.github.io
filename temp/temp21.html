@@ -20,7 +20,7 @@
         justify-content: center;
       }
       .title {
-        font-size: 25px;
+        font-size: 30px;
         margin-top: 30px;
       }
       .header {
@@ -30,7 +30,7 @@
         font-family: verdana;
       }
       .caption {
-        font-size: 17px;
+        font-size: 20px;
         color: gray;
         text-align: center;
         margin-bottom: 5px;
@@ -47,7 +47,7 @@
         color: white;
         background-color: green;
         font-size: 20px;
-        padding: 5px; 
+        padding: 5px;
         border-radius: 2px;
         width: 150px;
         border: none;
@@ -84,7 +84,7 @@
       </div>
       <div class="row">
         <div>
-          <div class="title" style="font-weight: bold;">Create a new account</div>
+          <div class="title">Create a new account</div>
           <div class="caption">It's quick and easy.</div>
         </div>
       </div>
@@ -106,18 +106,38 @@
         "Nov",
         "Dec",
       ];
+      let firstname = "";
+      let surname = "";
+      let email = "";
+      let password = "";
+      let gender = 0;
+      let dd = null;
+      let mm;
+      let yy;
+      let pronoun = "NA";
+      let g = "";
+      let movies=false
+      let music=false
+      let sports=false
       const showData = () => {
-        let firstname = document.getElementById("firstname").value;
-        let surname = document.getElementById("surname").value;
-        let email = document.getElementById("email").value;
-        let password = document.getElementById("password").value;
-        let gender = document.getElementsByName("gender");
-        let pronoun = document.getElementById("prSelect").value;
-        let day = document.getElementById("day").value;
-        let month = document.getElementById("month").value;
-        let year = document.getElementById("year").value;
-        let dob = `${day}-${month}-${year}`;
-        let g = "";
+        firstname = document.getElementById("firstname").value;
+        surname = document.getElementById("surname").value;
+        email = document.getElementById("email").value;
+        password = document.getElementById("password").value;
+        gender = document.getElementsByName("gender");
+        pronoun = document.getElementById("prSelect").value;
+        dd = Number(document.getElementById("day").value);
+        mm = Number(document.getElementById("month").value);
+        yy = Number(document.getElementById("year").value);
+        sports = document.getElementById("sports").checked;
+        music = document.getElementById("music").checked;
+        movies = document.getElementById("movies").checked;
+        let strInterests = "";
+        if (sports) strInterests += "Sports ";
+        if (music) strInterests += "Music ";
+        if (movies) strInterests += "Movies ";
+        let dob = `${dd}-${months[mm]}-${yy}`;
+        g = "";
         if (gender[0].checked) g = "Female";
         if (gender[1].checked) g = "Male";
         if (gender[2].checked) g = pronoun;
@@ -128,19 +148,45 @@
           <p>Password:${password}</p>
           <p>Gender:${g}</p>
           <p>Date of Birth:${dob}</p>
+          <p>Interests:${strInterests}</p>
           <button>Confirm</button>
-          <button>Edit</button>
+          <button onclick=showForm()>Edit</button>
         </div>
         `;
         root.innerHTML = str;
+      };
+
+      const f1 = () => {
+        let str = "";
+        let dt = new Date();
+        let d = dd ?? dt.getDate();
+        let m = mm ?? dt.getMonth();
+        let y = yy ?? dt.getFullYear();
+        if (pronoun != "NA") prSelect.style.display = "block";
+        for (let i = 1; i <= 31; i++) {
+          str += `<option ${i === d && "selected"}>${i}</option>`;
+        }
+        day.innerHTML = str;
+        str = "";
+        for (let i = 0; i <= 11; i++) {
+          str += `<option value=${i} ${i === m && "selected"}>${
+            months[i]
+          }</option>`;
+        }
+        month.innerHTML = str;
+        str = "";
+        for (let i = 1905; i <= 2025; i++) {
+          str += `<option ${i === y && "selected"}>${i}</option>`;
+        }
+        year.innerHTML = str;
       };
 
       const showForm = () => {
         let str = `
       
       <div class="row">
-        <input type="text" id="firstname" placeholder="Firstname" />
-        <input type="text" id="surname" placeholder="Surname" />
+        <input type="text" id="firstname" value='${firstname}' placeholder="Firstname" />
+        <input type="text" id="surname" value='${surname}' placeholder="Surname" />
       </div>
       <div class="row" style="justify-content: start">
         <div class="leftCaption">
@@ -154,6 +200,7 @@
         <select id="month"></select>
         <select id="year"></select>
       </div>
+
       <div class="row" style="justify-content: start">
         <div class="leftCaption">
           Gender<span class="qMark"
@@ -164,69 +211,98 @@
       <div class="row">
         <div class="radioClass">
           <div><label> Female</label></div>
-          <div><input type="radio" name="gender" onclick="togglePronoun()" /></div>
+          <div><input type="radio" ${
+            g === "Female" && "checked"
+          } name="gender" onclick="togglePronoun()" /></div>
         </div>
         <div class="radioClass">
           <div><label> Male</label></div>
-          <div><input type="radio" name="gender" onclick="togglePronoun()" /></div>
+          <div><input type="radio" ${
+            g === "Male" && "checked"
+          } name="gender" onclick="togglePronoun()" /></div>
         </div>
         <div class="radioClass">
           <div><label> Custom</label></div>
-          <div><input type="radio" name="gender" onclick="togglePronoun()" /></div>
+          <div><input type="radio" ${
+            pronoun != "NA" && "checked"
+          } name="gender" onclick="togglePronoun()" /></div>
         </div>
       </div>
 
+      <div class="row" style="justify-content: start">
+        <div class="leftCaption">
+          Interests<span class="qMark"
+            ><abbr title="Click for more information">?</abbr></span
+          >
+        </div>
+      </div>
+
+
+      <div class="row">
+        <div class="radioClass">
+          <div><label> Movies</label></div>
+          <div><input type="checkbox" ${movies && "checked"} id='movies'/></div>
+        </div>
+        <div class="radioClass">
+          <div><label> Music</label></div>
+          <div><input type="checkbox" ${music && "checked"} id='music'/></div>
+        </div>
+        <div class="radioClass">
+          <div><label>Sports</label></div>
+          <div><input type="checkbox" ${sports && "checked"} id='sports' /></div>
+        </div>
+      </div>
+
+
      <div class="row">
       <select id="prSelect" style="display:none">
-        <option value="NA">Select your pronoun</option>
-        <option value="She">She:"Wish her a happy birthday"</option>
+        <option value="NA" >Select your pronoun</option>
+        <option value="She" ${
+          pronoun == "She" && "selected"
+        }>She:"Wish her a happy birthday"</option>
         <option value="He">He:"Wish him a happy birthday"</option>
-        <option value="They">They:"Wish them a happy birthday"</option>
+        <option value="They" >They:"Wish them a happy birthday"</option>
       </select>
      </div>
 
       <div class="row">
-        <input type="text" id="email" placeholder="Mobule number or email address" />
+        <input type="text" value='${email}' id="email" placeholder="Mobule number or email address" />
       </div>
       <div class="row">
-        <input type="password" id="password" placeholder="New password" />
+        <input type="password" value='${password}' id="password" placeholder="New password" />
+        <img src="assets/images/eye-hide.png" id='toggleEye' onclick='togglePwd()' width="40px">
       </div>
       <div class="row">
         <button onclick='showData()'>Sign Up</button>
       </div>
       `;
         root.innerHTML = str;
+        f1();
       };
 
       showForm();
-      let str = "";
-      let dt = new Date()
-      let d = dt.getDate()
-      let m = dt.getMonth()
-      let y = dt.getFullYear()
-      for (let i = 1; i <= 31; i++) {
-        str += `<option ${i === d && "selected"}>${i}</option>`;
-      }
-      day.innerHTML = str;
-      str = "";
-      for (let i = 0; i <= 11; i++) {
-        str += `<option ${i === m && "selected"}>${months[i]}</option>`;
-      }
-      month.innerHTML = str;
-      str = "";
-      for (let i = 1905; i <= 2025; i++) {
-        str += `<option ${i === y && "selected"}>${i}</option>`;
-      }
-      year.innerHTML = str;
 
+      const togglePwd = () => {
+        let pwd = document.getElementById("password");
+        if (pwd.type === "password") {
+          document.getElementById("toggleEye").src =
+            "assets/images/eye-show.png";
+          pwd.type = "text";
+        } else {
+          document.getElementById("toggleEye").src =
+            "assets/images/eye-hide.png";
+          pwd.type = "password";
+        }
+      };
       const togglePronoun = () => {
         let p = document.getElementsByName("gender");
         if (p[2].checked) {
           prSelect.style.display = "block";
         } else {
           prSelect.style.display = "none";
+          pronoun = "NA";
         }
       };
     </script>
   </body>
-</html> 
+</html>
