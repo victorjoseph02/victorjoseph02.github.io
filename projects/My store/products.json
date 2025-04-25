@@ -19,7 +19,7 @@
         "desc" : "This is description of the product",
         "price": 50,
         "url":"https://picsum.photos/id/3/300/300"
-    },
+    },  
     {
         "id": 4,
         "name": "Product 4",
